@@ -47,37 +47,36 @@ Le système repose sur **trois rôles logiques** :
 
 ## 🧩 Architecture logique
 
-            Islem
-
-┌─────────────────────────┐
-│ Serveur central (PC1) │
-│ - Recherche │
-│ - Annuaire │
-│ │
-│ Serveur FTP (PC2) │
-│ - Partage du fichier │
-└──────────▲────────────-─┘
-│
-Résultat (IP + fichier)
-│
-┌──────────┴──────────┐
-│ Akram │
-│ Client FTP (PC3) │
-│ - Recherche │
-│ - Téléchargement │
-└──────────────────--─┘
+                     Islem
+        ┌─────────────────────────┐
+        │ Serveur central (PC1)   │
+        │ - Recherche             │
+        │ - Annuaire              │
+        │                         │
+        │ Serveur FTP (PC2)       │
+        │ - Partage du fichier   │
+        └──────────▲─────────────┘
+                   │
+        Résultat (IP + fichier)
+                   │
+        ┌──────────┴──────────┐
+        │        Akram        │
+        │ Client FTP (PC3)   │
+        │ - Recherche        │
+        │ - Téléchargement   │
+        └───────────────────┘
 
 ---
 
 ## 📁 Organisation du projet
 
 p2p_project/
-│
-├── central_server.py # Serveur central
-├── ftp_server.py # Serveur FTP (partage)
-├── register_file.py # Enregistrement du fichier
-├── ftp_client.py # Client FTP
-└── Ingénierie des réseaux tout IP.pdf
+
+- central_server.py # Serveur central
+- ftp_server.py # Serveur FTP (partage)
+- register_file.py # Enregistrement du fichier
+- ftp_client.py # Client FTP
+- Ingénierie des réseaux tout IP.pdf
 
 ---
 
