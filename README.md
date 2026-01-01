@@ -87,7 +87,6 @@ p2p_project/
 - Connexion réseau :
   - même Wi-Fi
   - ou même réseau local
-  - ou **partage de connexion 4G (hotspot)**
 
 ---
 
