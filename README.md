@@ -20,6 +20,26 @@ Akram : client FTP
 
 ---
 
+## 👥 Ordre d’exécution
+
+1️⃣ Lancer le serveur central
+
+    python central_server.py
+
+2️⃣ Lancer le serveur FTP
+
+    python ftp_server.py
+
+3️⃣ Enregistrer le fichier auprès du serveur central
+
+    python register_file.py
+
+4️⃣ Lancer le client
+
+    python ftp_client.py
+
+---
+
 ## 🧠 Principe de fonctionnement
 
 Le système repose sur **trois rôles logiques** :
