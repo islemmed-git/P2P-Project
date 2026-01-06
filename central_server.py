@@ -1,29 +1,49 @@
 import socket
+import threading
 
-files_db = {}  # keyword -> (ip, port, filename)
+HOST = "127.0.0.1"
+PORT = 9000
 
-s = socket.socket()
-s.bind(("127.0.0.1", 9000))
+files = {}  # dictionnaire : mot-clé -> (ip, port, fichier)
+
+def handle_client(conn, addr):
+    try:
+        msg = conn.recv(1024).decode()
+        print(f"[{addr}] Message reçu :", msg)
+
+        if msg.startswith("REGISTER"):
+            parts = msg.split(";")
+            keyword = parts[1]
+            ip = parts[2]
+            port = parts[3]
+            filename = parts[4]
+
+            files[keyword] = (ip, port, filename)
+            print("Fichier enregistré :", files[keyword])
+            conn.send("OK".encode())
+
+        elif msg.startswith("SEARCH"):
+            keyword = msg.split(";")[1]
+            if keyword in files:
+                ip, port, filename = files[keyword]
+                response = f"{ip};{port};{filename}"
+                conn.send(response.encode())
+            else:
+                conn.send("NOTFOUND".encode())
+
+    except Exception as e:
+        print("Erreur :", e)
+
+    conn.close()
+
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
 s.listen(5)
 
-print("PC1 - Serveur central démarré sur le port 9000")
+print("Serveur central démarré sur le port 9000...")
 
 while True:
     conn, addr = s.accept()
-    data = conn.recv(1024).decode()
-
-    if data.startswith("REGISTER"):
-        _, keyword, ip, port, filename = data.split(";")
-        files_db[keyword] = (ip, int(port), filename)
-        print(f"Fichier enregistré : {filename} ({keyword})")
-        conn.send(b"OK")
-
-    elif data.startswith("SEARCH"):
-        _, keyword = data.split(";")
-        if keyword in files_db:
-            ip, port, filename = files_db[keyword]
-            conn.send(f"{ip};{port};{filename}".encode())
-        else:
-            conn.send(b"NOT_FOUND")
-
-    conn.close()
+    thread = threading.Thread(target=handle_client, args=(conn, addr))
+    thread.start()
