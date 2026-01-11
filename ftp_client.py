@@ -5,7 +5,7 @@ SERVER_IP = "127.0.0.1"
 SERVER_PORT = 9000
 KEYWORD = "reseaux"
 
-# Connexion au serveur central
+# Connexion au SC 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((SERVER_IP, SERVER_PORT))
 
